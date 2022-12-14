@@ -8,7 +8,7 @@ class Api::V1::ItemsController < ApplicationController
     }}
   end
   def create
-    item = Item.new amount: 1, notes: '记账'
+    item = Item.new amount: params[:amount], notes: params[:notes]
     if item.save
       render json: { resource: item }
     else
