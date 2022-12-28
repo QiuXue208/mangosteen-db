@@ -5,7 +5,7 @@ class AutoJwt
 
   def call(env)
     # 跳过 以下路径 的检查
-    return @app.call(env) if ['/api/v1/session'].includes? env['PATH_INFO']
+    return @app.call(env) if ['/api/v1/session', '/api/v1/validations_code'].includes? env['PATH_INFO']
     header = env['HTTP_AUTHORIZATION']
     # formatter: Bearer xxx
     jwt = header.split(' ')[1] rescue ''
