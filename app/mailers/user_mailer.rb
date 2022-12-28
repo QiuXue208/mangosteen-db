@@ -1,6 +1,7 @@
 class UserMailer < ApplicationMailer
-  def welcome_email(code)
-    @code = code
-    mail(to: '1309571292@qq.com', subject: 'hi')
+  def welcome_email(email)
+    validation_code = ValidationCode.order(created_at: :desc).find_by_email(email)
+    @code = validation_code.code
+    mail(to: email, subject: '乐事记账验证码')
   end
 end
