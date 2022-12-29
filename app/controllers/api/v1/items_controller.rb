@@ -12,7 +12,9 @@ class Api::V1::ItemsController < ApplicationController
     }}
   end
   def create
-    item = Item.new amount: params[:amount], notes: params[:notes]
+    # permit会从params中提取出指定的参数
+    item = Item.new params.permit(:amount, :notes, :tag_id, :happen_at, :kind)
+    item.user_id = request.env['current_user_id']
     if item.save
       render json: { resource: item }
     else
