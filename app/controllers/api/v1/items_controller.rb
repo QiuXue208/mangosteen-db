@@ -11,6 +11,7 @@ class Api::V1::ItemsController < ApplicationController
       count: Item.count
     }}
   end
+
   def create
     # permit会从params中提取出指定的参数
     item = Item.new params.permit(:amount, :notes, :tag_id, :happen_at, :kind)
@@ -20,5 +21,37 @@ class Api::V1::ItemsController < ApplicationController
     else
       render json: { errors: item.errors }, status: 422
     end
+  end
+
+  def summary
+    hash = Hash.new
+    items = Item
+      .where(user_id: request.env['current_user_id'])
+      .where(happen_at: params[:happened_after]..params[:happened_before])
+      .where(kind: params[:kind])
+    items.each do |item|
+      if params[:group_by] == 'happen_at'
+        key = item.happen_at.in_time_zone('Beijing').strftime('%Y-%m-%d')
+        hash[key] ||= 0
+        hash[key] += item.amount
+      else params[:group_by] == 'tag_id'
+        key = item.tag_id
+        hash[key] ||= 0
+        hash[key] += item.amount
+      end
+    end
+
+    groups = hash.map { |k, v| {"#{params[:group_by]}": k, amount: v} }
+
+    if params[:group_by] == 'happen_at'
+      groups.sort! { |a, b| a[:happen_at] <=> b[:happen_at] }
+    elseif params[:group_by] == 'tag_id'
+      groups.sort! { |a, b| b[:amount] <=> a[:amount] }
+    end
+
+    render json: {
+      resources: groups,
+      total: items.sum(:amount)
+    }
   end
 end
