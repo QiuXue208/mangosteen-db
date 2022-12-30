@@ -1,0 +1,11 @@
+zh-CN:
+  activerecord:
+    errors:
+      # 通用错误提示 
+      message:
+        invalid: 格式不正确
+      # 针对某个具体的model来定义
+      validation_code:
+        attributes:
+          email:
+            invalid: 邮件地址格式不正确
