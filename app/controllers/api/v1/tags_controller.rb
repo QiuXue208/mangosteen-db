@@ -11,7 +11,7 @@ class Api::V1::TagsController < ApplicationController
     if tag.save
       render json: { resource: tag }
     else
-      render json: { errors: tag.errors } status: 422
+      render json: { errors: tag.errors }, status: 422
     end
   end
 
