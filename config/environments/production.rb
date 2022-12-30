@@ -56,6 +56,18 @@ Rails.application.configure do
   # config.active_job.queue_name_prefix = "mangosteen_2_production"
 
   config.action_mailer.perform_caching = false
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address:              'smtp.qq.com',
+    port:                 587,
+    domain:               'smtp.qq.com',
+    user_name:            '1309571292@qq.com',
+    password:             Rails.application.credentials.email_password,
+    authentication:       'plain',
+    enable_starttls_auto: true,
+    open_timeout:         10,
+    read_timeout:         10
+  }
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
