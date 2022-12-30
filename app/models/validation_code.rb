@@ -3,6 +3,8 @@ class ValidationCode < ApplicationRecord
   has_secure_token :code, length: 24
   # 限制email为必填项
   validates :email, presence: true
+  # email 必须是邮箱格式
+  validates :email, format: { with: /\A.+@.+\z/i }
 
   # 定义枚举
   enum kind: { sign_in: 0, reset_password: 1 }
