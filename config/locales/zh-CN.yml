@@ -2,10 +2,13 @@ zh-CN:
   activerecord:
     errors:
       # 通用错误提示 
-      message:
+      messages:
         invalid: 格式不正确
+        blank: 不能为空
       # 针对某个具体的model来定义
-      validation_code:
-        attributes:
-          email:
-            invalid: 邮件地址格式不正确
+      models:
+        validation_code:
+          attributes:
+            email:
+              blank: 邮件地址不能为空
+              invalid: 邮件地址格式不正确
