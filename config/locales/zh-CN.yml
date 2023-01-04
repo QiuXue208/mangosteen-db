@@ -12,3 +12,20 @@ zh-CN:
             email:
               blank: 邮件地址不能为空
               invalid: 邮件地址格式不正确
+  activemodel:
+    errors:
+      messages:
+        invalid: 格式不正确
+        blank: 必填
+        not_found: 找不到对应的记录
+      models:
+        session:
+          attributes:
+            email:
+              blank: 邮件地址不能为空
+              invalid: 邮件地址格式不正确
+              not_found: 找不到对应的记录
+            code:
+              blank: 验证码不能为空
+              wrong_length: 验证码长度必须为6位
+              not_a_number: 验证码必须全部为数字
