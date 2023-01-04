@@ -13,7 +13,8 @@ class Session
     # 如果code为空，或格式不正确，不需要验证
     return if self.code.blank? || !self.code.match(/\A\d{6}\z/)
     # 存在账号code，且used_at为空时才可以登录
-    canSignin = ValidationCode.exists?(email: params[:email], code: params[:code], used_at: nil)
-    self.errors.add :email, 404 unless canSignin
+    canSignin = ValidationCode.exists?(email: self.email, code: self.code, used_at: nil)
+    # 请检查验证码是否正确
+    self.errors.add :code, '请检查验证码是否正确' unless canSignin
   end
 end
