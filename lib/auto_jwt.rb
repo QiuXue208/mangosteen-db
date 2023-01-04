@@ -1,3 +1,5 @@
+require 'jwt'
+
 class AutoJwt
   def initialize(app)
     @app = app
@@ -11,7 +13,7 @@ class AutoJwt
     jwt = header.split(' ')[1] rescue ''
     begin
       # decode jwt
-      decoded_arr = JWT.decode jwt, Rails.application.credentials.hmac_secret, true, { algorithm: 'HS256'} rescue nil
+      decoded_arr = JWT.decode jwt, Rails.application.credentials.hmac_secret, true, { algorithm: 'HS256' } 
     rescue JWT::ExpiredSignature
       return [401, {}, [JSON.generate({reason: 'Token expired'})]]
     rescue
